@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="jumbotron text-center">
+<h3>İslam Hakikatlerine Sorgulamak Üzere Hoş Geldiniz</h3>
+</div>
+<p>
+{% if request.user.is_authenticated %}
+    Giriş Yapılmış,{{request.user.username}}
+{% else %}
+    Giriş Yapılmamış...
+{% endif %}             
+</p>
+{% endblock body %}

@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h1>MAKALELER</h1>
+<hr>
+{% if articles %}
+
+<div class="row">
+   <div class="col-md-11 offset-md-4">
+      <div class="col-lg-8">
+
+          <form class="form-inline">
+              {% csrf_token %}
+              <input class="form-control mr-sm-2" name="keyword" type="search" placeholder="Ara...">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Ara</button>
+          </form>
+          
+       </div>
+    </div>
+</div>
+
+{% for x in articles %}
+<div class="row">
+      <div class="col-md-11 offset-md-2">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+        <!-- Title -->
+        <a href="{% url 'article:detail' x.id %}"><h3 class="mt-2"> {{x.title}}</h3> </a> 
+
+        <!-- Author -->
+        <p class="lead">
+        YAZAR:
+          <small>{{x.author}}</small>
+        </p>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <p>{{x.createdDate}}</p>
+
+
+        <!-- Preview Image -->
+        {% if x.image %}
+        <a href="{% url 'article:detail' x.id %}"><img class="img-fluid rounded" src="{{x.image.url}}" alt=""></a>
+        {% endif %}
+
+        <hr>
+
+        <p class="lead">
+        {{x.content|safe|truncatewords:50}}
+        </p>
+
+        <a style="float:right;" href="{% url 'article:detail' x.id %}">Devamını Oku ...</a>
+
+        <hr>
+         <hr>
+      </div>
+
+    </div>
+    </div>
+{% endfor %}
+{% else %}
+<div class="alert alert-danger">Hiç Bir Makale Bulunamadı...</div>
+{% endif %}
+{% endblock body %}
